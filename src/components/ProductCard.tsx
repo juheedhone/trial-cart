@@ -1,4 +1,4 @@
-import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
+import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem } from "../redux/slice/cartSlice";
@@ -19,6 +19,8 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const items = useSelector((state: RootState) => state.cartSlice.items);
   const itemExistsInCart = items.some((item) => item.id === product.id);
+  const itemQuantity =
+    items.find((item) => item.id === product.id)?.quantity || 0;
 
   const dispatch = useDispatch();
 
@@ -49,8 +51,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               className="remove-item-btn"
               onClick={() => handleRemoveFromCart(product)}
             >
-              <MinusIcon />
+              {itemQuantity > 1 ? <MinusIcon /> : <TrashIcon />}
             </button>
+            <p>{itemQuantity}</p>
             <button
               type="button"
               className="add-item-btn"
