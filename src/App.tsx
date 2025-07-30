@@ -1,11 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import "./App.css";
 import Header from "./components/Header";
 import ProductGrid from "./components/ProductGrid";
 import SearchBar from "./components/SearchBar";
-import { addItem, removeItem } from "./redux/slice/cartSlice";
 
 interface Item {
   id: number;
@@ -15,8 +13,6 @@ interface Item {
 }
 
 function App() {
-  const dispatch = useDispatch();
-
   const [products, setProducts] = useState<Item[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Item[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,14 +41,6 @@ function App() {
     setSearchTerm(term);
   };
 
-  const handleAddToCart = (product: Item) => {
-    dispatch(addItem(product.id));
-  };
-
-  const handleRemoveFromCart = (product: Item) => {
-    dispatch(removeItem(product.id));
-  };
-
   return (
     <div className="app">
       <Header />
@@ -61,10 +49,7 @@ function App() {
           searchTerm={searchTerm}
           onSearchChange={handleSearchChange}
         />
-        <ProductGrid
-          products={filteredProducts}
-          onAddToCart={handleAddToCart}
-        />
+        <ProductGrid products={filteredProducts} />
       </main>
     </div>
   );

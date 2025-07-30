@@ -11,10 +11,9 @@ interface Item {
 
 interface ProductGridProps {
   products: Item[];
-  onAddToCart: (product: Item) => void;
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ products, onAddToCart }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   if (products.length === 0) {
     return (
       <div className="no-products">
@@ -47,7 +46,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, onAddToCart }) => {
         <ProductCard
           key={product.id}
           product={product}
-          onAddToCart={onAddToCart}
         />
       ))}
     </div>

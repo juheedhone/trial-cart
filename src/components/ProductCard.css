@@ -91,3 +91,14 @@
   width: 18px;
   height: 18px;
 }
+
+.item-in-cart{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.remove-item-btn:hover,
+.add-item-btn:hover {
+  transform: scale(1.1);
+}
