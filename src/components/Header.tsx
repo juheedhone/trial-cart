@@ -1,11 +1,12 @@
 import type React from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
 import "./Header.css";
 
-interface HeaderProps {
-  cartCount: number;
-}
+const Header: React.FC = () => {
+  const items = useSelector((state: RootState) => state.cartSlice.items);
+  const cartCount = items.reduce((total, item) => total + item.quantity, 0);
 
-const Header: React.FC<HeaderProps> = ({ cartCount }) => {
   return (
     <header className="header">
       <div className="header-content">

@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import "./App.css";
 import Header from "./components/Header";
 import ProductGrid from "./components/ProductGrid";
 import SearchBar from "./components/SearchBar";
+import { addItem, removeItem } from "./redux/slice/cartSlice";
 
 interface Item {
   id: number;
@@ -13,10 +15,11 @@ interface Item {
 }
 
 function App() {
+  const dispatch = useDispatch();
+
   const [products, setProducts] = useState<Item[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Item[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     axios
@@ -43,14 +46,16 @@ function App() {
   };
 
   const handleAddToCart = (product: Item) => {
-    setCartCount((prev) => prev + 1);
-    // You can add more cart logic here, like storing items in state or localStorage
-    console.log("Added to cart:", product);
+    dispatch(addItem(product.id));
+  };
+
+  const handleRemoveFromCart = (product: Item) => {
+    dispatch(removeItem(product.id));
   };
 
   return (
     <div className="app">
-      <Header cartCount={cartCount} />
+      <Header />
       <main className="main-content">
         <SearchBar
           searchTerm={searchTerm}
